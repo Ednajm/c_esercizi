@@ -11,7 +11,7 @@ long findi(int value, const int *values, unsigned size){
 int main(){
     int values[] = { 1 , 2 , 3 , 4 , 5 , 6 , 7};
     unsigned size = sizeof(values) / sizeof(values[0]);
-    int value = 6; // Example value to find
+    int value = 6; 
     long index = findi(value, values, size);
     printf("findi = %ld\n", index);
 }
