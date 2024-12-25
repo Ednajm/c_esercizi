@@ -13,6 +13,7 @@ int main(){
     struct complex c2 = {4.0, 5.0};  // c2 = 4 + 5i
     struct complex result;
 
+    
     // Compute the product
     complex_product(&result, &c1, &c2);
 
