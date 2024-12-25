@@ -1,37 +1,34 @@
-#include<stdio.h>
-#include<math.h>
-#include<stdlib.h>
+#include <stdio.h>
+
 typedef struct point {
-   float x;
-   float y;
+    float x;
+    float y;
 } point_t;
 
 typedef struct polygon {
     unsigned n;
     point_t *vertices;
 } polygon_t;
-float compute_area(const polygon_t *p){
-    double area = 0.0;
-    for (unsigned i = 0; i < p->n; i++) {
-        unsigned next = (i + 1) % p->n;
-        area += p->vertices[i].x * p->vertices[next].y - p->vertices[i].y * p->vertices[next].x;
+
+float compute_area(const polygon_t *p) {
+    unsigned i, next;
+    float sum = 0.0F;
+
+    for (i = 0; i < p->n; i++) {
+        next = (i + 1) % p->n;
+        sum += 0.5F * (p->vertices[i].x * p->vertices[next].y) - (p->vertices[i].y * p->vertices[next].x);
     }
-    area = fabs(area) / 2.0;
-    return area;
+    return sum;
 }
-int main(){
-    polygon_t p;
-    p.n = 4;
-    p.vertices = (point_t *)malloc(p.n * sizeof(point_t));
-    p.vertices[0].x = 0.0;
-    p.vertices[0].y = 0.0;
-    p.vertices[1].x = 1.0;
-    p.vertices[1].y = 0.0;
-    p.vertices[2].x = 1.0;
-    p.vertices[2].y = 1.0;
-    p.vertices[3].x = 0.0;
-    p.vertices[3].y = 1.0;
-    printf("Area of the polygon: %.2f\n", compute_area(&p));
-    free(p.vertices);
-    return 0;
+
+#define SIZE 3
+
+int main(void) {
+    point_t vertices[SIZE] = {
+            {.x=0.0F, .y=0.0F},
+            {.x=4.0F, .y=0.0F},
+            {.x=2.0F, .y=2.0F},
+    };
+    polygon_t p = {.n=SIZE, .vertices=vertices};
+    printf("area=%.3f\n", compute_area(&p));
 }
