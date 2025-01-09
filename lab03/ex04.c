@@ -8,48 +8,37 @@ struct array_info {
     float variance;
 };
 
-struct array_info array_stats(const int *values, unsigned size) {
+struct array_info array_stats(const int *values, unsigned size){
     unsigned i;
-    int max = values[0], min = values[0];
-    float mean = 0.0F, variance = 0.0F;
-
-    /* compute max, min, sum */
-    for (i = 0; i < size; i++) {
-        if (values[i] > max) {
-            max = values[i];
-        }
-        if (values[i] < min) {
+    int min = values[0];
+    int max = values[0];
+    float mean = 0.0F;
+    float variance = 0.0F;
+    int sum = 0;
+    for(unsigned int i = 0; i < size; i++){
+        if(values[i] < min){
             min = values[i];
         }
-        mean += (float) values[i];
+        if(values[i] > max){
+            max = values[i];
+        }
+        sum += values[i];
     }
-
-    /* compute mean */
-    mean /= (float) size;
-
-    /* compute variance */
-    for (i = 0; i < size; i++) {
-        variance += powf((float) values[i] - mean, 2.0F);
+    mean = (float)sum / size;
+    for(unsigned int i = 0; i < size; i++){
+        variance += (values[i] - mean) * (values[i] - mean);
     }
-    variance /= (float) size;
-
-    /* return array_info_t variable */
-    struct array_info info = {.max = max, .min = min, .mean = mean, .variance = variance};
-    return info;
+    variance = variance / size;
+    struct array_info result = {max, min, mean, variance};
+    return result;
+int main(){
+    int values[] = {2, 3, 5, 44, 76};
+    unsigned size = sizeof(values) / sizeof(values[0]);
+    struct array_info stats = array_stats(values, size);
+    printf("Max: %d\n", stats.max);
+    printf("Min: %d\n", stats.min);
+    printf("Mean: %.2f\n", stats.mean);
+    printf("Variance: %.2f\n", stats.variance);
+    return 0;
 }
-
-#define SIZE 128
-
-int main(void) {
-    int i, src[SIZE];
-    struct array_info info;
-
-    /* fill the array */
-    for (i = 0; i < SIZE; i++) {
-        src[i] = i;
-    }
-
-    /* call array_stats and show the result */
-    info = array_stats(src, SIZE);
-    printf("max=%d min=%d mean=%.3f variance=%.3f\n", info.max, info.min, info.mean, info.variance);
 }

@@ -9,8 +9,10 @@ struct person {
 };
 
 void init_person(struct person *person, char *name, char *lastname, double age) {
-    strncpy(person->name, name, FIELD_LEN);
-    strncpy(person->lastname, lastname, FIELD_LEN);
+    strncpy(person->name, name, FIELD_LEN - 1);
+    person->name[FIELD_LEN - 1] = '\0';
+    strncpy(person->lastname, lastname, FIELD_LEN - 1);
+    person->lastname[FIELD_LEN - 1] = '\0';
     person->age = age;
 }
 

@@ -67,7 +67,7 @@ int main(void) {
 
     /* show the result */
     for (i = 0; list[i] != NULL; i++) {
-        printf("%s/n", list[i]);
+        printf("%s\n", list[i]);
     }
 
     /* free actual strings */
@@ -78,3 +78,5 @@ int main(void) {
     /* free array of char pointers */
     free(list);
 }
+
+

@@ -1,23 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 long matrix_edge(unsigned rows, unsigned cols, int m[][cols]){
-    long sum = 0;
-    for(unsigned int j = 0; j < cols; j++){
-        sum += m[0][j] + m[rows - 1][j];
-    }
-    for(unsigned int i = 1; i < rows - 1; i++){
-        sum += m[i][0] + m[i][cols - 1];
+    int sum = 0;
+    for(unsigned int i = 0; i < rows - 1; i++){
+        for(unsigned int j = 0; j < cols - 1; j++){
+            if(i == 0 || i == rows -  1 || j == 0 || j == cols - 1){
+                sum = sum+m[i][j];
+            }
+        }
     }
     return sum;
 }
-int main(void){
-  int m[4][4] = {
-            {1,  2,  3,  4},
-            {5,  6,  7,  8},
-            {9,  10, 11, 12},
-            {13, 14, 15, 16},
+int main(){
+    int m[4][4] = {
+        {2, 4, 6, 7},
+        {1, 3, 8, 9},
+        {11, 32, 12, 44},
+        {5, 10, 13, 37}
     };
-    printf("matrix edge sum = %ld\n", matrix_edge(4 ,4 , m));
-    return 0;
-
+    int result = matrix_edge(4, 4, m);
+    printf("sum = %d\n", result);
 }

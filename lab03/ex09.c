@@ -14,21 +14,26 @@ typedef struct circle {
     float radius;
 } circle_t;
 
-int isinside(const point_t *p, const circle_t *c) {
-    float distance = hypotf(p->x - c->center.x, p->y - c->center.y);
-    if (distance < c->radius) {
+int isinside(const point_t *p, const circle_t *c){
+    float d1 = p->x - c->center.x;
+    float d2 = p->y - c->center.y;
+    float distance = hypot(d2, d1);
+    if(distance < c->radius){
         return TRUE;
+    }else{
+        return FALSE;
+
     }
-    return FALSE;
 }
 
-#define SIZE 3
-
-int main(void) {
-    point_t p = {.x=8, .y=8};
-    circle_t c = {
-            .center = {.x=0, .y=0},
-            .radius = 10,
-    };
-    printf("isinside?=%d\n", isinside(&p, &c));
+int main(){
+    point_t p = {4, 2};
+    circle_t c = {{6, 1}, 1};
+    if (isinside(&p, &c)){
+        printf("The point is inside the circle.\n");
+    }else{
+        printf("The point is outside the circle.\n");
+    }
+    return 0;
 }
+    
